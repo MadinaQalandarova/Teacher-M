@@ -142,7 +142,7 @@ table.plan td.tt{font-family:Consolas,monospace;font-size:12.5px;color:var(--str
 .menu-b{display:none}
 /* dars ichidagi rasm-chizmalar (SVG diagrammalar) */
 .visual{display:flex;justify-content:center;margin:18px 0 20px;overflow-x:auto}
-.visual svg{max-width:100%;height:auto}
+.visual svg{width:100%;height:auto}
 .vbox{fill:var(--elev);stroke:var(--a);stroke-width:2}
 .vbox2{fill:var(--asoft);stroke:var(--a2);stroke-width:2}
 .vbox3{fill:var(--warnbg);stroke:var(--warn);stroke-width:2}
