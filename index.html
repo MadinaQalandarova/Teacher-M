@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Teacher-M — 0 dan HTML • CSS • JavaScript (2 oy)</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="mesh"></div>
+<div class="app">
+  <div class="backdrop" id="backdrop" hidden></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="logo">M</span><div><b>Teacher-M</b><small>HTML • CSS • JS — 2 oylik kurs</small></div></div>
+    <div class="search">🔎 <input id="q" placeholder="Dars qidirish... (masalan: flex)" /></div>
+    <div class="progress-box"><div class="p-top"><span>Umumiy progress</span><b id="pTxt">0%</b></div><div class="p-bar"><i id="pBar"></i></div></div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">💡 Har dars oxirida quiz — 70%+ to'plasangiz "bajarildi" ✅</div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="btn btn-i menu-b" id="menuBtn">☰</button>
+      <div class="crumbs" id="crumbs">Bosh sahifa</div>
+      <div class="top-actions">
+        <button class="btn btn-i" id="themeBtn" title="Tun/kunduz">🌙</button>
+        <button class="btn btn-g" id="playBtn" title="Kod maydonchasi">▶ Sinash</button>
+        <button class="btn btn-p" id="nextBtn">Keyingi dars →</button>
+      </div>
+    </div>
+    <div class="content"><div class="wrap" id="view"></div></div>
+  </div>
+</div>
+<div class="pg" id="pg"><div class="pg-box">
+  <div class="pg-h">▶ Jonli kod maydonchasi <span class="kbd">HTML + CSS + JS</span><button class="btn btn-g" style="margin-left:auto" id="pgClose">Yopish ✕</button></div>
+  <div class="pg-b"><textarea id="pgCode" spellcheck="false"></textarea><iframe id="pgFrame" title="natija"></iframe></div>
+  <div class="pg-f"><button class="btn btn-p" id="pgRun">▶ Ishga tushirish</button><button class="btn btn-g" id="pgCopy">Nusxalash</button><span style="font-size:12px;color:var(--dim);align-self:center">Chapga kod yozing → "Ishga tushirish" ni bosing</span></div>
+</div></div>
+<div class="toast-w" id="toasts"></div>
+<script src="js/lessons-html.js"></script>
+<script src="js/lessons-css.js"></script>
+<script src="js/lessons-js.js"></script>
+<script src="js/exam.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

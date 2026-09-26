@@ -1,4 +1,4 @@
-/* Teacher-M — JavaScript moduli (17–24-darslar). Eslatma: kodlarda </script> o'rniga <\/script> yozilgan — tashqi faylda bu xavfsiz va ish vaqtida to'g'ri </script> ga aylanadi. */
+/* Teacher-M — JavaScript moduli (17–24-darslar). */
 const JS_LESSONS = [
 {id:"js-1",mod:"js",n:17,title:"JS nima? O'zgaruvchilar va console",time:"50 daqiqa",
 goal:`script ulaydi, let/const bilan o'zgaruvchi ochadi, console.log da natija chiqaradi.`,
