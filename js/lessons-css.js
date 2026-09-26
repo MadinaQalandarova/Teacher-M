@@ -1,8 +1,9 @@
-/* Teacher-M — CSS moduli (9–16-darslar) */
+/* Teacher-M — CSS moduli (10–17-darslar) */
 const CSS_LESSONS = [
 {id:"css-1",mod:"css",n:9,title:"CSS nima? Ulanish va selektorlar",time:"50 daqiqa",
 goal:`CSS ni HTML ga 3 usulda ulaydi, teg/class/id selektorlarini to'g'ri ishlatadi.`,
 theory:`<p><b>Oddiy tilda:</b> HTML — uy, CSS — uning bo'yog'i, pardasi, mebeli. Bir xil uyni har xil bezash mumkin.</p><ul><li><b>3 ulanish usuli:</b> 1) <span class="kbd">style</span> atributi ichida (kichik ishga), 2) <span class="kbd">&lt;style&gt;</span> head ichida, 3) <b>alohida style.css fayl</b> (eng to'g'risi!).</li><li><b>Selektorlar:</b> <span class="kbd">h1</span> — barcha h1 lar, <span class="kbd">.quti</span> — class="quti" bo'lganlar (nuqta bilan!), <span class="kbd">#asosiy</span> — id="asosiy" bo'lgan yagona element (# bilan!).</li><li><b>Formula:</b> selektor { xususiyat: qiymat; } — masalan <span class="kbd">h1 { color: red; }</span>.</li><li>class ko'p elementda takrorlanadi, id sahifada <b>1 marta</b> bo'ladi.</li></ul>`,
+visual:`<svg viewBox="0 0 460 200" width="440"><text x="230" y="22" class="vt">Selektor kimni tanlaydi?</text><rect x="30" y="45" width="120" height="60" rx="12" class="vbox"/><text x="90" y="72" class="vbig">h1</text><text x="90" y="94" class="vs">barcha h1 lar</text><rect x="170" y="45" width="120" height="60" rx="12" class="vbox2"/><text x="230" y="72" class="vbig">.quti</text><text x="230" y="94" class="vs">class lilar</text><rect x="310" y="45" width="120" height="60" rx="12" class="vbox3"/><text x="370" y="72" class="vbig">#asosiy</text><text x="370" y="94" class="vs">bitta element</text><text x="230" y="132" class="vbig">h1 { color: red; }</text><line x1="90" y1="140" x2="90" y2="158" class="vln"/><text x="90" y="176" class="vs">selektor</text><line x1="230" y1="140" x2="230" y2="158" class="vln"/><text x="230" y="176" class="vs">xususiyat</text><line x1="370" y1="140" x2="370" y2="158" class="vln"/><text x="370" y="176" class="vs">qiymat</text></svg>`,
 code:`<!DOCTYPE html>
 <html lang="uz">
 <head><meta charset="UTF-8"><title>CSS boshlash</title>
@@ -31,6 +32,7 @@ quiz:[
 {id:"css-2",mod:"css",n:10,title:"Rang, o'lcham, shrift",time:"50 daqiqa",
 goal:`color, background, px/rem/%, font-size, font-weight, text-align ni ishlatadi.`,
 theory:`<p><b>Oddiy tilda:</b> Bu dars — bo'yoq do'koni. Rang tanlaysiz, harf kattaligini sozlaysiz.</p><ul><li><b>Ranglar:</b> <span class="kbd">red</span> (nom), <span class="kbd">#ff0000</span> (HEX kod — eng aniq), <span class="kbd">rgb(255,0,0)</span>. <b>color</b> — matn rangi, <b>background</b> — fon rangi.</li><li><b>O'lchamlar:</b> <span class="kbd">px</span> — aniq (16px standart matn), <span class="kbd">%</span> — ota-onaga nisbatan, <span class="kbd">rem</span> — ildizga nisbatan (moslashuvchan).</li><li><b>Shrift:</b> <span class="kbd">font-size</span> (kattalik), <span class="kbd">font-weight: bold</span> (qalin), <span class="kbd">text-align: center</span> (o'rtaga).</li></ul>`,
+visual:`<svg viewBox="0 0 460 200" width="440"><text x="230" y="22" class="vt">Rang va o'lcham ko'rgazmasi</text><rect x="40" y="45" width="80" height="50" rx="10" style="fill:#ef4444"/><rect x="130" y="45" width="80" height="50" rx="10" style="fill:#22c55e"/><rect x="220" y="45" width="80" height="50" rx="10" style="fill:#3b82f6"/><rect x="310" y="45" width="80" height="50" rx="10" style="fill:#eab308"/><text x="80" y="112" class="vs">red</text><text x="170" y="112" class="vs">#22c55e</text><text x="260" y="112" class="vs">blue</text><text x="350" y="112" class="vs">yellow</text><text x="90" y="148" style="fill:var(--text);font-size:12px;font-family:var(--font)">12px</text><text x="200" y="152" style="fill:var(--text);font-size:20px;font-weight:700;font-family:var(--font)">20px</text><text x="330" y="158" style="fill:var(--text);font-size:30px;font-weight:800;font-family:var(--font)">30px</text><text x="230" y="182" class="vs">color = matn rangi, background = fon rangi</text></svg>`,
 code:`<style>
   body { font-family: Arial, sans-serif; }
   h1 { color: #4f46e5; font-size: 36px; text-align: center; }
@@ -48,11 +50,12 @@ task:`Portfoliongizda: ismni 36px markazda, "Men haqimda" matnini 18px, ko'nikma
 quiz:[
 {q:`Fon rangi qaysi xususiyat?`,opts:[`color`,`background`,`font-size`,`text-color`],a:1,why:`background — orqa fon.`},
 {q:`HEX rangga misol?`,opts:[`reddish`,`#4f46e5`,`36px`,`bold`],a:1,why:`# bilan boshlangan 6 xonali kod.`},
-{q:`Matnni o'rtaga nima olib keladi?`,opts:[`font-size: center`,`text-align: center`,`margin: center`,`align: middle`],a:1,why:`text-align matnni tekislaydi.`}]},
+{q:`Matnni o'rtaga nima olib keladi?`,opts:[`font-size: center`,`text-align: center`,`margin: auto`,`align: middle`],a:1,why:`text-align matnni tekislaydi.`}]},
 
 {id:"css-3",mod:"css",n:11,title:"Box Model: margin, padding, border",time:"55 daqiqa",
 goal:`Har element quti ekanini tushunib, margin/padding/border ni ajratadi.`,
 theory:`<p><b>Oddiy tilda:</b> Har element — sovg'a qutisi: sovg'a = matn (content), o'rama qog'oz = <b>padding</b> (ichki bo'shliq), quti devori = <b>border</b>, qutilar orasi = <b>margin</b> (tashqi bo'shliq).</p><ul><li><span class="kbd">padding: 20px</span> — matn quti devoriga yopishmaydi, nafas oladi.</li><li><span class="kbd">border: 2px solid red</span> — qalinligi, turi, rangi (3 tasi shart!).</li><li><span class="kbd">margin: 20px</span> — qutilar bir-biriga yopishmaydi.</li><li><span class="kbd">border-radius: 12px</span> — burchaklarni yumaloqlaydi (chiroyli card siri!).</li></ul>`,
+visual:`<svg viewBox="0 0 460 220" width="440"><text x="230" y="22" class="vt">Box Model — sovg'a qutisi</text><rect x="70" y="40" width="320" height="150" rx="12" style="fill:none;stroke:var(--warn);stroke-width:2;stroke-dasharray:7 5"/><text x="230" y="58" class="vs">margin (tashqi bo'shliq)</text><rect x="95" y="66" width="270" height="108" rx="10" style="fill:var(--asoft);stroke:var(--bad);stroke-width:3"/><text x="230" y="86" class="vs">border (devor)</text><rect x="120" y="94" width="220" height="64" rx="8" style="fill:none;stroke:var(--a);stroke-width:2;stroke-dasharray:5 4"/><text x="230" y="112" class="vs">padding (ichki bo'shliq)</text><rect x="150" y="120" width="160" height="28" rx="7" class="vbox"/><text x="230" y="139" class="vs">matn (content)</text><text x="230" y="205" class="vs">Tashqaridan ichkariga: margin → border → padding → matn</text></svg>`,
 code:`<style>
   .quti {
     background: #e0e7ff;
@@ -81,6 +84,7 @@ quiz:[
 {id:"css-4",mod:"css",n:12,title:"Display va Position: joylashtirish",time:"50 daqiqa",
 goal:`block/inline farqini biladi, relative/absolute bilan elementni siljitadi.`,
 theory:`<p><b>Oddiy tilda:</b> <b>block</b> — avtobus (butun qatorni egallaydi: div, h1, p). <b>inline</b> — velosiped (qatorda yonma-yon: span, a).</p><ul><li><span class="kbd">display: inline-block</span> — yonma-yon turadi, lekin eni-bo'yi berish mumkin (tugmalar uchun ideal!).</li><li><span class="kbd">position: relative</span> — o'z joyidan siljish. <span class="kbd">absolute</span> — ota-onaga yopishib siljish (ota relative bo'lishi shart!).</li><li><span class="kbd">top/left/right/bottom</span> — necha px siljishi.</li></ul>`,
+visual:`<svg viewBox="0 0 460 210" width="440"><text x="230" y="22" class="vt">block vs inline</text><rect x="40" y="42" width="380" height="34" rx="8" class="vbox"/><text x="230" y="64" class="vs">block (div) — butun qatorni egallaydi</text><rect x="40" y="86" width="380" height="34" rx="8" class="vbox"/><text x="230" y="108" class="vs">block (h1) — yangidan boshlanadi</text><rect x="40" y="132" width="110" height="34" rx="8" class="vbox2"/><text x="95" y="154" class="vs">inline</text><rect x="158" y="132" width="110" height="34" rx="8" class="vbox2"/><text x="213" y="154" class="vs">inline</text><rect x="276" y="132" width="110" height="34" rx="8" class="vbox2"/><text x="331" y="154" class="vs">inline</text><text x="230" y="188" class="vs">span va a — velosiped kabi yonma-yon turadi</text></svg>`,
 code:`<style>
   .btn { display: inline-block; background: #4f46e5; color: #fff;
          padding: 10px 22px; border-radius: 99px; text-decoration: none; }
@@ -98,12 +102,13 @@ keys:[`block = yangi qator, inline = yonma-yon.`,`Tugmalar uchun inline-block en
 task:`Portfolio header ga 2 ta tugma (inline-block, yumaloq) qo'shing. Rasm ustiga "YANGI" yorlig'ini absolute bilan joylang.`,
 quiz:[
 {q:`Qaysi element block?`,opts:[`span`,`div`,`a`,`b`],a:1,why:`div butun qatorni egallaydi.`},
-{q:`Yonma-yon + eni berish uchun nima?`,opts:[`block`,`inline-block`,`none`,`hidden`],a:1,why:`inline-block ikkala dunyoning yaxshisi.`},
+{q:`Yonma-yon + eni berish uchun nima?`,opts:[`block`,`inline-block`,`flex`,`none`],a:1,why:`inline-block ikkala dunyoning yaxshisi.`},
 {q:`absolute element kimga yopishadi?`,opts:[`Hech kimga`,`Eng yaqin relative otaga`,`Doim ekranga`,`Tasodifiy`],a:1,why:`Ota relative bo'lishi shart.`}]},
 
 {id:"css-5",mod:"css",n:13,title:"Flexbox: qatorlarni sehrlash ✨",time:"60 daqiqa",
 goal:`display:flex, justify-content, align-items, gap bilan menyu va kartalar yasaydi.`,
 theory:`<p><b>Oddiy tilda:</b> Flexbox — aqlli javon: narsalarni o'zi tekislaydi. Ota <span class="kbd">display: flex</span> desa, bolalar itoatkor bo'ladi.</p><ul><li><span class="kbd">justify-content</span> — gorizontal: <b>center</b> (o'rta), <b>space-between</b> (chetlara), <b>flex-start/end</b>.</li><li><span class="kbd">align-items: center</span> — vertikal o'rta (eng ko'p ishlatiladigan!).</li><li><span class="kbd">gap: 12px</span> — bolalar orasi (margin o'rniga!).</li><li><span class="kbd">flex-wrap: wrap</span> — sig'masa pastga tushadi (telefon uchun).</li></ul><div class="tip t"><b>🎯 Sehrli uchlik (90% holatda yetadi):</b> display:flex + justify-content:center + align-items:center = hamma narsa o'rtada!</div>`,
+visual:`<svg viewBox="0 0 460 200" width="440"><text x="230" y="22" class="vt">Flexbox — aqlli javon (ota: display:flex)</text><rect x="30" y="45" width="400" height="90" rx="12" class="vbox"/><rect x="50" y="65" width="100" height="50" rx="9" class="vbox2"/><text x="100" y="94" class="vs">bola 1</text><rect x="180" y="65" width="100" height="50" rx="9" class="vbox2"/><text x="230" y="94" class="vs">bola 2</text><rect x="310" y="65" width="100" height="50" rx="9" class="vbox2"/><text x="360" y="94" class="vs">bola 3</text><line x1="30" y1="160" x2="430" y2="160" class="vln"/><path d="M30 160l0 0M418 152l12 8-12 8z" class="vhl"/><text x="230" y="152" class="vs">justify-content (gorizontal o'q)</text><text x="230" y="182" class="vs">gap = bolalar orasi • align-items = vertikal o'rta</text></svg>`,
 code:`<style>
   .menyu { display: flex; gap: 10px; background: #1e1b4b;
            padding: 12px; border-radius: 12px; }
@@ -129,6 +134,7 @@ quiz:[
 {id:"css-6",mod:"css",n:14,title:"Grid: jadvaldek dizayn",time:"55 daqiqa",
 goal:`grid-template-columns bilan 2–3 ustunli galereya yasaydi.`,
 theory:`<p><b>Oddiy tilda:</b> Flex — bir qatorli javon, <b>Grid — katakli shaxmat taxtasi</b> (qator + ustun birga!). Galereya, narxlar uchun ideal.</p><ul><li><span class="kbd">display: grid; grid-template-columns: 1fr 1fr 1fr</span> — 3 teng ustun. <b>fr</b> = ulush.</li><li><span class="kbd">repeat(3, 1fr)</span> — qisqa yozuv (3 marta 1fr).</li><li><span class="kbd">gap: 12px</span> — kataklar orasi.</li><li><b>Qoida:</b> oddiy qator → flex, murakkab katak → grid.</li></ul>`,
+visual:`<svg viewBox="0 0 460 210" width="440"><text x="230" y="22" class="vt">Grid — shaxmat taxtasi (3 ustun × 2 qator)</text><rect x="110" y="42" width="80" height="60" rx="9" class="vbox2"/><text x="150" y="77" class="vs">1fr</text><rect x="195" y="42" width="80" height="60" rx="9" class="vbox2"/><text x="235" y="77" class="vs">1fr</text><rect x="280" y="42" width="80" height="60" rx="9" class="vbox2"/><text x="320" y="77" class="vs">1fr</text><rect x="110" y="108" width="80" height="60" rx="9" class="vbox2"/><text x="150" y="143" class="vs">1fr</text><rect x="195" y="108" width="80" height="60" rx="9" class="vbox2"/><text x="235" y="143" class="vs">1fr</text><rect x="280" y="108" width="80" height="60" rx="9" class="vbox2"/><text x="320" y="143" class="vs">1fr</text><text x="230" y="190" class="vs">grid-template-columns: repeat(3, 1fr) + gap</text></svg>`,
 code:`<style>
   .gal { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
   .gal div { background: linear-gradient(135deg,#6366f1,#8b5cf6);
@@ -149,6 +155,7 @@ quiz:[
 {id:"css-7",mod:"css",n:15,title:"Responsive + hover: telefonda ham chiroyli 📱",time:"55 daqiqa",
 goal:`media query bilan mobil ko'rinish yasaydi, hover/transition bilan jonlantiradi.`,
 theory:`<p><b>Oddiy tilda:</b> Sayt — suv kabi: katta idishda keng, stakanda tor bo'lishi kerak. <b>Media query</b> — "agar ekran kichik bo'lsa, boshqacha ko'rin" degan shart.</p><ul><li><span class="kbd">@media (max-width: 600px)</span> — ekran 600px dan kichik bo'lsa ichidagi qoida ishlaydi.</li><li>Telefon uchun: 3 ustun → 1 ustun, katta matn → kichik.</li><li><span class="kbd">:hover</span> — sichqon borsa nima bo'ladi. <span class="kbd">transition: .3s</span> — silliq o'tish (sehr!).</li></ul>`,
+visual:`<svg viewBox="0 0 460 200" width="440"><text x="230" y="22" class="vt">Bitta sayt — ikki ko'rinish</text><rect x="30" y="45" width="200" height="110" rx="10" class="vbox"/><rect x="45" y="60" width="55" height="60" rx="6" class="vbox2"/><rect x="108" y="60" width="55" height="60" rx="6" class="vbox2"/><rect x="171" y="60" width="45" height="60" rx="6" class="vbox2"/><text x="130" y="140" class="vs">kompyuter: 3 ustun</text><rect x="290" y="45" width="90" height="110" rx="14" class="vbox"/><rect x="302" y="58" width="66" height="26" rx="6" class="vbox2"/><rect x="302" y="88" width="66" height="26" rx="6" class="vbox2"/><rect x="302" y="118" width="66" height="26" rx="6" class="vbox2"/><text x="335" y="172" class="vs">telefon: 1 ustun</text><text x="230" y="192" class="vs">@media (max-width: 600px) — shartni brauzer o'zi tekshiradi</text></svg>`,
 code:`<style>
   .tugma { background: #4f46e5; color: #fff; padding: 12px 26px;
            border-radius: 99px; border: none; font-size: 16px;
@@ -173,6 +180,7 @@ quiz:[
 {id:"css-8",mod:"css",n:16,title:"CSS loyiha: portfolio bezash 🏆",time:"70 daqiqa",
 goal:`HTML skeletini to'liq bezab, telefon + kompyuterda chiroyli portfolio topshiradi.`,
 theory:`<p><b>Marra yaqin!</b> 8 darsda o'rganganingiz: rang, shrift, box model, flex, grid, responsive, hover — hammasini birlashtiramiz.</p><ul><li><b>Reja:</b> 1) Ranglar palitrasi tanlang (2–3 rang). 2) Header ga fon + flex menyu. 3) Kartalar (radius + padding + soyalar). 4) Tugmalarga hover. 5) Media query bilan telefon ko'rinishi.</li><li><b>Soya siri:</b> <span class="kbd">box-shadow: 0 4px 14px rgba(0,0,0,.1)</span> — kartani "ko'taradi".</li><li>Tekshiruv: flex/grid ishlatilganmi? hover bormi? telefonda buzilmaydimi?</li></ul>`,
+visual:`<svg viewBox="0 0 460 200" width="440"><text x="230" y="22" class="vt">Chiroyli karta retsepti</text><rect x="60" y="45" width="140" height="110" rx="14" class="vbox"/><text x="130" y="80" class="vs">radius: 14px</text><text x="130" y="100" class="vs">padding: 20px</text><text x="130" y="120" class="vs">gap: 12px</text><line x1="200" y1="100" x2="250" y2="100" class="vln"/><path d="M240 92l12 8-12 8z" class="vhl"/><rect x="262" y="45" width="140" height="110" rx="14" style="fill:var(--elev);stroke:var(--a);stroke-width:2;filter:drop-shadow(0 8px 10px rgba(0,0,0,.25))"/><text x="332" y="80" class="vs">+ box-shadow</text><text x="332" y="100" class="vs">+ hover</text><text x="332" y="120" class="vs">+ 2 rang</text><text x="230" y="178" class="vs">Chapdagi oddiy quti → o'ngdagi jonli karta!</text></svg>`,
 code:`<style>
   * { margin: 0; box-sizing: border-box; }
   body { font-family: Arial; background: #eef1f8; color: #222; }
