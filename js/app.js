@@ -1,4 +1,4 @@
-/* Teacher-M — dvigatel: navigatsiya, dars ko'rinishi, quiz, baholash, playground.
+/* Teacher-M — dvigatel: navigatsiya, dars ko'rinishi, quiz, baholash, playground, ustoz sahifasi.
    Darslar js/lessons-*.js dan, imtihon js/exam.js dan keladi.
    Ikonkalar — toza SVG (har tizimda bir xil chiroyli ko'rinadi). */
 const LS = "teacher_m_v1";
@@ -18,6 +18,8 @@ const I = {
   pencil: '<svg viewBox="0 0 24 24"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg>',
   checksq: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8.5 12.5l2.5 2.5 5-5.5"/></svg>',
   cal: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  img: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M4 18l5-5 3 3 3-3 5 5"/></svg>',
+  board: '<svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg>',
   sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
   moon: '<svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>',
   play: '<svg viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>',
@@ -25,6 +27,8 @@ const I = {
 };
 
 const LESSONS = [...HTML_LESSONS, ...CSS_LESSONS, ...JS_LESSONS];
+/* Dars raqamlari avtomatik (ro'yxat tartibidan) — yangi dars qo'shilsa ham buzilmaydi */
+LESSONS.forEach((l, i) => { l.d = i + 1; });
 
 function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 function toast(m) { const w = $("#toasts"); const d = document.createElement("div"); d.className = "toast"; d.textContent = m; w.appendChild(d); setTimeout(() => d.remove(), 2600); }
@@ -56,6 +60,7 @@ function renderNav(filter) {
   h += '<div class="mod">Start <span class="cnt">1</span></div>';
   h += '<button class="item' + (cur === "home" ? " active" : "") + '" data-go="home"><span class="n">' + I.home + '</span><span class="t">Bosh sahifa & 2 oylik reja</span></button>';
   h += '<button class="item' + (cur === "exam" ? " active" : "") + '" data-go="exam"><span class="n">' + I.cap + '</span><span class="t">Yakuniy imtihon</span>' + (DB.done.exam ? '<span class="s">✅</span>' : "") + '</button>';
+  h += '<button class="item' + (cur === "guide" ? " active" : "") + '" data-go="guide"><span class="n">' + I.board + '</span><span class="t">Ustoz uchun</span></button>';
   const mods = [["html", "HTML — skelet", "1–2-hafta", "#f97316"], ["css", "CSS — dizayn", "3–4-hafta", "#3b82f6"], ["js", "JavaScript — jonlantirish", "5–8-hafta", "#eab308"]];
   mods.forEach(([m, t, s, c]) => {
     const list = LESSONS.filter(l => l.mod === m && (!filter || (l.title + l.id).toLowerCase().includes(filter)));
@@ -65,7 +70,7 @@ function renderNav(filter) {
     h += '<div style="font-size:11px;color:var(--faint);padding:0 10px 4px">' + s + '</div>';
     list.forEach(l => {
       const sc = DB.scores[l.id];
-      h += '<button class="item' + (cur === l.id ? " active" : "") + (DB.done[l.id] ? " done" : "") + '" data-go="' + l.id + '"><span class="n">' + (DB.done[l.id] ? "✓" : l.n) + '</span><span class="t">' + esc(l.title) + '</span>' + (sc != null ? '<span class="s">' + sc + '</span>' : "") + '</button>';
+      h += '<button class="item' + (cur === l.id ? " active" : "") + (DB.done[l.id] ? " done" : "") + '" data-go="' + l.id + '"><span class="n">' + (DB.done[l.id] ? "✓" : l.d) + '</span><span class="t">' + esc(l.title) + '</span>' + (sc != null ? '<span class="s">' + sc + '</span>' : "") + '</button>';
     });
   });
   nav.innerHTML = h;
@@ -78,6 +83,7 @@ function go(id) { cur = id; renderNav($("#q").value.trim().toLowerCase()); rende
 $("#nextBtn").onclick = () => {
   if (cur === "home") { if (LESSONS[0]) go(LESSONS[0].id); return; }
   if (cur === "exam") { go("home"); return; }
+  if (cur === "guide") { go("home"); return; }
   const o = order(); const i = o.indexOf(cur);
   if (i >= 0 && i < o.length - 1) go(o[i + 1]); else go("exam");
 };
@@ -90,20 +96,22 @@ function render() {
   const v = $("#view");
   if (cur === "home") return renderHome(v);
   if (cur === "exam") return renderExam(v);
+  if (cur === "guide") return renderGuide(v);
   const l = byId(cur);
   if (!l) { cur = "home"; return renderHome(v); }
-  $("#crumbs").innerHTML = 'Dars ' + l.n + ' / <b>' + esc(l.title) + '</b>';
-  let h = '<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a);letter-spacing:.06em">' + l.mod.toUpperCase() + ' • ' + l.n + '-DARS • ⏱ ' + l.time + '</div>';
+  $("#crumbs").innerHTML = 'Dars ' + l.d + ' / <b>' + esc(l.title) + '</b>';
+  let h = '<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a);letter-spacing:.06em">' + l.mod.toUpperCase() + ' • ' + l.d + '-DARS • ⏱ ' + l.time + '</div>';
   h += '<h1>' + esc(l.title) + '</h1><p>' + l.goal + '</p>';
   h += '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-p" data-act="play">' + I.play + ' Shu dars kodini sinash</button>' + (DB.done[l.id] ? '<span class="btn btn-g">✓ Bajarildi (' + (DB.scores[l.id] || "") + ' ball)</span>' : "") + '</div></div>';
-  h += '<div class="card"><h2 class="ic"><span class="e">' + I.book + '</span><span>Sodda tushuntirish (bolaga tushuntirgandek)</span></h2>' + l.theory + '</div>';
-  h += '<div class="card"><h2 class="ic"><span class="e">' + I.code + '</span><span>Misol kod — ko\'chirib sinab ko\'ring</span></h2>' + codeBlock(l.code) + '<div class="tip t"><b>👩‍🏫 O\'qituvchiga metodika:</b>' + l.teacher + '</div></div>';
+  h += '<div class="card"><h2 class="ic"><span class="e">' + I.book + '</span><span>Sodda tushuntirish</span></h2>' + l.theory + '</div>';
+  if (l.visual) h += '<div class="card"><h2 class="ic"><span class="e">' + I.img + '</span><span>Rasmda ko\'rinishi — ko\'rib tushuning</span></h2><div class="visual">' + l.visual + '</div></div>';
+  h += '<div class="card"><h2 class="ic"><span class="e">' + I.code + '</span><span>Misol kod — ko\'chirib sinab ko\'ring</span></h2>' + codeBlock(l.code) + '</div>';
   h += '<div class="card"><h2 class="ic"><span class="e">' + I.star + '</span><span>Esda saqlang (oltin qoidalar)</span></h2><ul>' + l.keys.map(k => '<li>' + k + '</li>').join("") + '</ul></div>';
   h += '<div class="card"><h2 class="ic"><span class="e">' + I.pencil + '</span><span>Amaliy topshiriq (uyga vazifa)</span></h2><p>' + l.task + '</p></div>';
   h += '<div class="card"><h2 class="ic"><span class="e">' + I.checksq + '</span><span>Quiz — o\'zingizni sinang <span style="font-size:12px;color:var(--dim)">(70+ ball = dars yopiladi)</span></span></h2><div id="quiz">';
   l.quiz.forEach((q, i) => {
-    h += '<div class="quiz-q" data-q="' + i + '"><p>' + (i + 1) + '. ' + q.q + '</p>';
-    q.opts.forEach((o, j) => { h += '<label><input type="radio" name="q' + i + '" value="' + j + '"/> <span>' + o + '</span></label>'; });
+    h += '<div class="quiz-q" data-q="' + i + '"><p>' + (i + 1) + '. ' + esc(q.q) + '</p>';
+    q.opts.forEach((o, j) => { h += '<label><input type="radio" name="q' + i + '" value="' + j + '"/> <span>' + esc(o) + '</span></label>'; });
     h += '<div class="q-exp" id="exp' + i + '"></div></div>';
   });
   h += '</div><button class="btn btn-p" id="checkBtn">' + I.checksq + ' Tekshirish</button><div class="score" id="scoreBox"></div></div>';
@@ -156,17 +164,34 @@ function confetti() {
 function renderHome(v) {
   $("#crumbs").textContent = "Bosh sahifa";
   const total = LESSONS.length;
-  let h = '<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a);letter-spacing:.06em">O\'QITUVCHI PLATFORMASI • 2 OY • 0 DAN</div>';
-  h += '<h1>HTML • CSS • JavaScript ni <span class="grad">0 dan o\'rgatamiz</span> 🚀</h1>';
-  h += '<p>Assalomu alaykum, ustoz! Bu platforma 2 oyda o\'quvchilarni noldan frontend asoslariga olib chiqish uchun tayyorlangan: har darsda <b>sodda tushuntirish + misol + jonli sinash + topshiriq + quiz</b> bor. O\'quvchi 70+ ball olsa, dars avtomatik "bajarildi" bo\'lib boradi. Internet kerak emas.</p>';
+  let h = '<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a);letter-spacing:.06em">O\'QUV PLATFORMASI • 2 OY • 0 DAN</div>';
+  h += '<h1>HTML • CSS • JavaScript ni <span class="grad">0 dan o\'rganamiz</span> 🚀</h1>';
+  h += '<p>2 oyda noldan frontend asoslarini o\'rganamiz: har darsda <b>sodda tushuntirish + rasm + misol + jonli sinash + topshiriq + quiz</b> bor. 70+ ball to\'plasang, dars "bajarildi" bo\'lib boradi. Internet kerak emas.</p>';
   h += '<div class="grid3"><div class="stat"><b>' + total + '</b><span>jami dars</span></div><div class="stat"><b>' + doneCount() + '</b><span>bajarildi</span></div><div class="stat"><b>' + pct() + '%</b><span>progress</span></div></div>';
   h += '<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:6px"><button class="btn btn-p" id="startB">' + I.play + ' Boshlash — 1-dars</button><button class="btn btn-g" id="resetB">Progressni tozalash</button></div></div>';
-  h += '<div class="card"><h2 class="ic"><span class="e">' + I.cal + '</span><span>2 oylik reja (haftama-hafta)</span></h2><table class="plan"><tr><th>Hafta</th><th>Mavzu</th><th>Darslar</th></tr><tr><td>1–2</td><td><span class="dot" style="background:#f97316;display:inline-block;vertical-align:middle"></span> HTML — sayt skeleti</td><td>1–8: teglar, ro\'yxat, jadval, forma, semantika</td></tr><tr><td>3–4</td><td><span class="dot" style="background:#3b82f6;display:inline-block;vertical-align:middle"></span> CSS — dizayn</td><td>9–16: rang, box model, flex, grid, responsive</td></tr><tr><td>5–8</td><td><span class="dot" style="background:#eab308;display:inline-block;vertical-align:middle"></span> JS — jonlantirish</td><td>17–24: o\'zgaruvchi, if, sikl, funksiya, DOM, loyiha</td></tr></table>';
-  h += '<div class="tip g"><b>👩‍🏫 Ustozga 3 oltin maslahat:</b>1) Har darsni avval jonli ko\'rsating ("Sinab ko\'rish" bilan). 2) O\'quvchidan kodni tushunib ko\'chirib yozishni so\'rang. 3) Quizdan o\'tolmagan o\'quvchi bilan nazariyani 5 daqiqada qayta takrorlang.</div></div>';
-  h += '<div class="card"><h2 class="ic"><span class="e">' + I.book + '</span><span>Baholash tizimi</span></h2><ul><li>Har darsda 3–4 savollik quiz — 100 ballik tizimda.</li><li><b>70+ ball</b> = dars yopildi ✓ va yon menyuda ✓ chiqadi.</li><li>Barcha darslar + yakuniy imtihon = kurs tugadi 🎓.</li><li>Natijalar brauzerda saqlanadi (localStorage).</li></ul></div>';
+  h += '<div class="card"><h2 class="ic"><span class="e">' + I.cal + '</span><span>2 oylik reja (haftama-hafta)</span></h2><table class="plan"><tr><th>Hafta</th><th>Mavzu</th><th>Darslar</th></tr><tr><td>1–2</td><td><span class="dot" style="background:#f97316;display:inline-block;vertical-align:middle"></span> HTML — sayt skeleti</td><td>1–9: teglar, atributlar, ro\'yxat, jadval, forma, semantika</td></tr><tr><td>3–4</td><td><span class="dot" style="background:#3b82f6;display:inline-block;vertical-align:middle"></span> CSS — dizayn</td><td>10–17: rang, box model, flex, grid, responsive</td></tr><tr><td>5–8</td><td><span class="dot" style="background:#eab308;display:inline-block;vertical-align:middle"></span> JS — jonlantirish</td><td>18–25: o\'zgaruvchi, if, sikl, funksiya, DOM, loyiha</td></tr></table></div>';
+  h += '<div class="card"><h2 class="ic"><span class="e">' + I.book + '</span><span>Baholash tizimi</span></h2><ul><li>Har darsda 3–4 savollik quiz — 100 ballik tizimda.</li><li><b>70+ ball</b> = dars yopildi ✓ va yon menyuda ✓ chiqadi.</li><li>Barcha darslar + yakuniy imtihon = kurs tugadi 🎓.</li><li>Natijalar brauzerda saqlanadi.</li></ul></div>';
   v.innerHTML = h;
   $("#startB").onclick = () => { if (LESSONS[0]) go(LESSONS[0].id); };
   $("#resetB").onclick = () => { if (confirm("Progress o'chirilsinmi?")) { DB = { done: {}, scores: {}, theme: DB.theme }; save(); renderNav(""); renderHome(v); toast("Tozalandi ♻"); } };
+  document.querySelector(".content").scrollTop = 0;
+}
+
+/* ---------- Ustoz uchun (darsda ko'rsatilmaydi) ---------- */
+function renderGuide(v) {
+  $("#crumbs").innerHTML = 'Yordam / <b>Ustoz uchun</b>';
+  let h = '<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a)">FAQAT USTOZ UCHUN — DARSDA TV DA KO\'RSATMANG</div>';
+  h += '<h1>Ustoz uchun metodika</h1><p>Har darsni qanday o\'tish bo\'yicha maslahatlar shu yerda. O\'quvchilar dars sahifasida buni ko\'rmaydi.</p></div>';
+  h += '<div class="card"><h2 class="ic"><span class="e">' + I.star + '</span><span>3 oltin maslahat</span></h2><ul><li>Har darsni avval jonli ko\'rsating ("Sinab ko\'rish" bilan).</li><li>O\'quvchidan kodni tushunib ko\'chirib yozishni so\'rang — yodlatmang.</li><li>Quizdan o\'tolmagan o\'quvchi bilan nazariyani 5 daqiqada qayta takrorlang.</li></ul></div>';
+  const mods = [["html", "HTML — skelet"], ["css", "CSS — dizayn"], ["js", "JavaScript — jonlantirish"]];
+  mods.forEach(([m, t]) => {
+    h += '<div class="card"><h2 class="ic"><span class="e">' + I.book + '</span><span>' + t + '</span></h2>';
+    LESSONS.filter(l => l.mod === m).forEach(l => {
+      h += '<p style="margin-top:10px"><b>' + l.d + '-dars: ' + esc(l.title) + ' (' + l.time + ')</b><br><span style="color:var(--dim)">' + l.teacher + '</span></p>';
+    });
+    h += '</div>';
+  });
+  v.innerHTML = h;
   document.querySelector(".content").scrollTop = 0;
 }
 
@@ -175,8 +200,8 @@ function renderExam(v) {
   if (!EXAM.length) { v.innerHTML = '<div class="card"><h2>Yakuniy imtihon tez kunda qo\'shiladi</h2><p>Hozircha darslarni tugating.</p></div>'; return; }
   let h = '<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a)">YAKUNIY IMTIHON • 10 SAVOL</div><h1>Kurs imtihoni</h1><p>Barcha modullar bo\'yicha 10 savol. 70+ ball = kursni tugatdingiz! Avval kamida 12 ta darsni yoping — shunda imtihon oson bo\'ladi.</p></div><div class="card"><div id="quiz">';
   EXAM.forEach((q, i) => {
-    h += '<div class="quiz-q" data-q="' + i + '"><p>' + (i + 1) + '. ' + q.q + '</p>';
-    q.opts.forEach((o, j) => { h += '<label><input type="radio" name="eq' + i + '" value="' + j + '"/> <span>' + o + '</span></label>'; });
+    h += '<div class="quiz-q" data-q="' + i + '"><p>' + (i + 1) + '. ' + esc(q.q) + '</p>';
+    q.opts.forEach((o, j) => { h += '<label><input type="radio" name="eq' + i + '" value="' + j + '"/> <span>' + esc(o) + '</span></label>'; });
     h += '<div class="q-exp" id="eexp' + i + '"></div></div>';
   });
   h += '</div><button class="btn btn-p" id="echeck">' + I.checksq + ' Imtihonni tekshirish</button><div class="score" id="escore"></div></div>';
