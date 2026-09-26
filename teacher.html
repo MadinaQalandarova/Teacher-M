@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Teacher-M — 0 dan HTML • CSS • JavaScript (2 oy)</title>
+<style>
+:root{
+  --font:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+  --radius:16px; --radius-sm:10px; --pill:999px;
+  --tr:.22s cubic-bezier(.2,.8,.3,1);
+  --side-w:308px;
+}
+[data-theme="light"]{
+  --bg:#eef1f8; --elev:rgba(255,255,255,.9); --soft:#e5e9f4; --hover:#f3f5fb;
+  --text:#111426; --dim:#59607a; --faint:#9aa1b8; --border:rgba(17,20,38,.09);
+  --a:#6366f1; --a2:#8b5cf6; --a3:#06b6d4; --strong:#4f46e5; --asoft:rgba(99,102,241,.12);
+  --ok:#16a34a; --okbg:rgba(22,163,74,.12); --bad:#dc2626; --badbg:rgba(220,38,38,.1);
+  --warn:#d97706; --warnbg:rgba(217,119,6,.12);
+  --code-bg:#0f172a; --code-tx:#e2e8f0;
+  --shadow:0 4px 14px rgba(17,20,38,.08),0 14px 40px rgba(17,20,38,.1);
+  --glass:rgba(255,255,255,.78); --inp:rgba(255,255,255,.75);
+}
+[data-theme="dark"]{
+  --bg:#08080c; --elev:rgba(20,20,25,.92); --soft:#17171c; --hover:#1e1e25;
+  --text:#f2f2f6; --dim:#a7a7b5; --faint:#65656f; --border:rgba(255,255,255,.09);
+  --a:#818cf8; --a2:#a78bfa; --a3:#22d3ee; --strong:#a5b4fc; --asoft:rgba(129,140,248,.16);
+  --ok:#4ade80; --okbg:rgba(74,222,128,.13); --bad:#f87171; --badbg:rgba(248,113,113,.13);
+  --warn:#fbbf24; --warnbg:rgba(251,191,36,.13);
+  --code-bg:#0b0e1a; --code-tx:#e2e8f0;
+  --shadow:0 4px 14px rgba(0,0,0,.5),0 14px 40px rgba(0,0,0,.55);
+  --glass:rgba(16,16,20,.8); --inp:rgba(0,0,0,.35);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--text);overflow:hidden;-webkit-font-smoothing:antialiased;transition:background var(--tr),color var(--tr)}
+.mesh{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(800px 460px at 6% -6%,var(--asoft),transparent 60%),radial-gradient(760px 480px at 98% 2%,rgba(139,92,246,.1),transparent 55%),radial-gradient(680px 560px at 60% 112%,rgba(6,182,212,.09),transparent 60%)}
+.app{position:relative;z-index:1;display:flex;height:100%;overflow:hidden}
+/* sidebar */
+.sidebar{width:var(--side-w);min-width:var(--side-w);background:var(--glass);backdrop-filter:blur(20px) saturate(1.4);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:30}
+.brand{padding:20px 18px 12px;display:flex;align-items:center;gap:12px}
+.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--a),var(--a2),var(--a3));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:20px;box-shadow:0 4px 14px rgba(99,102,241,.4)}
+.brand b{font-size:17px}.brand small{display:block;font-size:11.5px;color:var(--dim);font-weight:500}
+.search{margin:2px 14px 8px;display:flex;align-items:center;gap:8px;background:var(--inp);border:1px solid var(--border);border-radius:var(--pill);padding:9px 14px}
+.search input{flex:1;border:none;outline:none;background:transparent;font-size:13.5px;color:var(--text)}
+.progress-box{margin:4px 14px 6px;background:var(--elev);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 13px}
+.p-top{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);font-weight:600;margin-bottom:8px}
+.p-top b{color:var(--strong)}
+.p-bar{height:8px;border-radius:99px;background:var(--soft);overflow:hidden}
+.p-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--a2),#ec4899);border-radius:99px;transition:width .5s ease}
+.nav{flex:1;overflow-y:auto;padding:6px 10px 14px}
+.mod{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);padding:14px 10px 6px;display:flex;align-items:center;gap:8px}
+.mod::after{content:"";flex:1;height:1px;background:var(--border)}
+.mod .cnt{font-size:10px;background:var(--soft);padding:2px 8px;border-radius:99px;color:var(--dim)}
+.item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 11px;border-radius:11px;font-size:13.5px;color:var(--dim);font-weight:500;margin-bottom:2px;border:1px solid transparent;cursor:pointer;transition:all var(--tr)}
+.item:hover{background:var(--hover);color:var(--text)}
+.item.active{background:var(--asoft);color:var(--strong);font-weight:700;border-color:rgba(99,102,241,.18)}
+.item .n{width:26px;height:26px;border-radius:8px;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;flex-shrink:0}
+.item.active .n{background:linear-gradient(135deg,var(--a),var(--a2));color:#fff}
+.item.done .n{background:var(--ok);color:#fff}
+.item .t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .s{font-size:10px;font-weight:800;padding:2px 7px;border-radius:99px;background:var(--okbg);color:var(--ok)}
+.side-foot{border-top:1px solid var(--border);padding:12px 14px;font-size:11.5px;color:var(--faint);display:flex;gap:8px;align-items:center}
+/* main */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{display:flex;align-items:center;gap:10px;padding:13px 22px;background:var(--glass);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.crumbs{font-size:13px;color:var(--dim)}.crumbs b{color:var(--text)}
+.top-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 17px;border-radius:var(--pill);font-size:13.5px;font-weight:700;border:1px solid transparent;cursor:pointer;transition:all var(--tr);white-space:nowrap}
+.btn-p{background:linear-gradient(135deg,var(--a),var(--a2));color:#fff;box-shadow:0 4px 14px rgba(99,102,241,.35)}
+.btn-p:hover{transform:translateY(-2px)}
+.btn-g{background:var(--soft);color:var(--dim)}.btn-g:hover{color:var(--text);background:var(--hover)}
+.btn-i{width:38px;height:38px;padding:0;justify-content:center;border-radius:12px;background:var(--soft);color:var(--dim)}
+.content{flex:1;overflow-y:auto;padding:22px 26px 70px}
+.wrap{max-width:900px;margin:0 auto}
+.hero{background:var(--elev);border:1px solid var(--border);border-radius:20px;padding:26px;box-shadow:var(--shadow);margin-bottom:18px;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--a),var(--a2),#ec4899,var(--a3))}
+.hero h1{font-size:clamp(20px,3vw,28px);margin-bottom:8px}
+.hero p{color:var(--dim);font-size:14.5px;line-height:1.65}
+.grad{background:linear-gradient(90deg,var(--strong),var(--a2),#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0 4px}
+.stat{background:var(--elev);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center}
+.stat b{font-size:22px;display:block}.stat span{font-size:12px;color:var(--dim)}
+.card{background:var(--elev);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.card h2{font-size:17px;margin-bottom:10px;display:flex;align-items:center;gap:9px}
+.card h2 .e{width:32px;height:32px;border-radius:10px;background:var(--asoft);color:var(--strong);display:inline-flex;align-items:center;justify-content:center;font-size:16px}
+.card p,.card li{font-size:14.5px;line-height:1.75;color:var(--text)}
+.card ul,.card ol{padding-left:20px;margin:8px 0}
+.card li{margin-bottom:5px}.card li::marker{color:var(--a);font-weight:800}
+.tip{border-radius:12px;padding:13px 15px;font-size:13.8px;line-height:1.65;margin:12px 0;border:1px solid}
+.tip.t{background:var(--asoft);border-color:rgba(99,102,241,.25)}
+.tip.g{background:var(--okbg);border-color:rgba(22,163,74,.3)}
+.tip.w{background:var(--warnbg);border-color:rgba(217,119,6,.3)}
+.tip b{display:block;margin-bottom:4px}
+.code{background:var(--code-bg);color:var(--code-tx);border-radius:14px;overflow:hidden;margin:12px 0;border:1px solid rgba(255,255,255,.08)}
+.code-h{display:flex;align-items:center;gap:8px;padding:9px 13px;background:rgba(255,255,255,.05);font-size:12px;color:#94a3b8}
+.code-h .d{width:10px;height:10px;border-radius:50%}.code-h button{margin-left:auto;background:rgba(255,255,255,.1);color:#e2e8f0;border:none;border-radius:8px;padding:5px 11px;font-size:12px;cursor:pointer;font-weight:600}
+.code-h button:hover{background:rgba(255,255,255,.2)}
+.code pre{padding:14px 16px;overflow-x:auto;font-family:Consolas,Menlo,monospace;font-size:13px;line-height:1.65}
+table.plan{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}
+table.plan th,table.plan td{border:1px solid var(--border);padding:10px 12px;text-align:left}
+table.plan th{background:var(--soft);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.quiz-q{background:var(--hover);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:11px}
+.quiz-q p{font-weight:700;font-size:14px;margin-bottom:9px}
+.quiz-q label{display:flex;gap:9px;align-items:flex-start;font-size:13.8px;padding:8px 10px;border-radius:9px;cursor:pointer;line-height:1.5}
+.quiz-q label:hover{background:var(--elev)}
+.quiz-q input{margin-top:3px;accent-color:var(--a)}
+.q-exp{display:none;font-size:13px;margin-top:8px;border-radius:9px;padding:9px 12px;line-height:1.6}
+.q-exp.ok{display:block;background:var(--okbg);color:var(--ok);border:1px solid rgba(22,163,74,.3)}
+.q-exp.no{display:block;background:var(--badbg);color:var(--bad);border:1px solid rgba(220,38,38,.3)}
+.score{display:none;text-align:center;padding:20px;border-radius:14px;margin-top:12px;font-weight:800;font-size:16px}
+.score.show{display:block}.score.pass{background:var(--okbg);color:var(--ok);border:1px solid rgba(22,163,74,.35)}
+.score.fail{background:var(--warnbg);color:var(--warn);border:1px solid rgba(217,119,6,.35)}
+.lnav{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.kbd{font-size:11px;background:var(--soft);border:1px solid var(--border);border-radius:6px;padding:2px 7px}
+/* playground modal */
+.pg{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px}
+.pg.open{display:flex}
+.pg-box{width:100%;max-width:980px;height:min(84vh,720px);background:var(--elev);border:1px solid var(--border);border-radius:18px;display:flex;flex-direction:column;overflow:hidden;box-shadow:var(--shadow)}
+.pg-h{padding:13px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-weight:800}
+.pg-b{flex:1;display:grid;grid-template-columns:1fr 1fr;min-height:0}
+.pg-b textarea{border:none;outline:none;resize:none;background:var(--code-bg);color:var(--code-tx);font-family:Consolas,monospace;font-size:13px;padding:14px;line-height:1.6;border-right:1px solid var(--border)}
+.pg-b iframe{border:none;background:#fff;width:100%;height:100%}
+.pg-f{padding:12px 16px;border-top:1px solid var(--border);display:flex;gap:9px}
+.toast-w{position:fixed;bottom:20px;right:20px;z-index:200;display:flex;flex-direction:column;gap:9px}
+.toast{background:var(--elev);border:1px solid var(--border);border-radius:13px;padding:12px 17px;font-size:13.5px;font-weight:600;box-shadow:var(--shadow);animation:tin .3s ease}
+@keyframes tin{from{opacity:0;transform:translateX(30px)}}
+.backdrop{display:none}
+@media(max-width:960px){
+  .sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-102%);transition:transform .3s ease;width:300px;min-width:300px}
+  .sidebar.open{transform:none}.backdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:25}
+  .grid3{grid-template-columns:1fr 1fr}.content{padding:16px 14px 70px}.pg-b{grid-template-columns:1fr}.pg-b iframe{min-height:220px}
+  .menu-b{display:inline-flex!important}
+}
+.menu-b{display:none}
+@media(max-width:560px){.grid3{grid-template-columns:1fr}.hero{padding:20px}.card{padding:17px}}
+</style>
+</head>
+<body>
+<div class="mesh"></div>
+<div class="app">
+  <div class="backdrop" id="backdrop" hidden></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="logo">M</span><div><b>Teacher-M</b><small>HTML • CSS • JS — 2 oylik kurs</small></div></div>
+    <div class="search">🔎 <input id="q" placeholder="Dars qidirish... (masalan: flex)" /></div>
+    <div class="progress-box"><div class="p-top"><span>Umumiy progress</span><b id="pTxt">0%</b></div><div class="p-bar"><i id="pBar"></i></div></div>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">💡 Har dars oxirida quiz — 70%+ to'plasangiz "bajarildi" ✅</div>
+  </aside>
+  <div class="main">
+    <div class="topbar">
+      <button class="btn btn-i menu-b" id="menuBtn">☰</button>
+      <div class="crumbs" id="crumbs">Bosh sahifa</div>
+      <div class="top-actions">
+        <button class="btn btn-i" id="themeBtn" title="Tun/kunduz">🌙</button>
+        <button class="btn btn-g" id="playBtn" title="Kod maydonchasi">▶ Sinash</button>
+        <button class="btn btn-p" id="nextBtn">Keyingi dars →</button>
+      </div>
+    </div>
+    <div class="content"><div class="wrap" id="view"></div></div>
+  </div>
+</div>
+<div class="pg" id="pg"><div class="pg-box">
+  <div class="pg-h">▶ Jonli kod maydonchasi <span class="kbd">HTML + CSS + JS</span><button class="btn btn-g" style="margin-left:auto" id="pgClose">Yopish ✕</button></div>
+  <div class="pg-b"><textarea id="pgCode" spellcheck="false"></textarea><iframe id="pgFrame" title="natija"></iframe></div>
+  <div class="pg-f"><button class="btn btn-p" id="pgRun">▶ Ishga tushirish</button><button class="btn btn-g" id="pgCopy">Nusxalash</button><span style="font-size:12px;color:var(--dim);align-self:center">Chapga kod yozing → "Ishga tushirish" ni bosing</span></div>
+</div></div>
+<div class="toast-w" id="toasts"></div>
+<script>
+/* ================= Teacher-M dvigateli ================= */
+const LS="teacher_m_v1";
+let DB={done:{},scores:{},theme:"light"};
+try{const r=localStorage.getItem(LS);if(r)DB=Object.assign(DB,JSON.parse(r));}catch(e){}
+function save(){localStorage.setItem(LS,JSON.stringify(DB));}
+document.documentElement.dataset.theme=DB.theme||"light";
+const $=s=>document.querySelector(s);
+
+/* ---------- DARS MA'LUMOTLARI (keyingi commitlarda to'ldiriladi) ---------- */
+const LESSONS=[
+/*__LESSONS__*/
+];
+
+/* ---------- Yordamchilar ---------- */
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function toast(m){const w=$("#toasts");const d=document.createElement("div");d.className="toast";d.textContent=m;w.appendChild(d);setTimeout(()=>d.remove(),2600);}
+function openPlay(code){$("#pg").classList.add("open");if(code)$("#pgCode").value=code;runPlay();}
+function runPlay(){$("#pgFrame").srcdoc=$("#pgCode").value;}
+$("#pgRun").onclick=runPlay;$("#pgClose").onclick=()=>$("#pg").classList.remove("open");
+$("#pg").addEventListener("mousedown",e=>{if(e.target.id==="pg")$("#pg").classList.remove("open");});
+$("#pgCopy").onclick=()=>{navigator.clipboard.writeText($("#pgCode").value);toast("Nusxalandi ✅");};
+$("#playBtn").onclick=()=>openPlay("<h1>Salom! 👋</h1>\n<style>h1{color:#6366f1;font-family:sans-serif}</style>\n\n<script>console.log('ishladi')<\/script>");
+$("#themeBtn").onclick=()=>{DB.theme=DB.theme==="dark"?"light":"dark";save();document.documentElement.dataset.theme=DB.theme;$("#themeBtn").textContent=DB.theme==="dark"?"☀️":"🌙";};
+$("#themeBtn").textContent=DB.theme==="dark"?"☀️":"🌙";
+$("#menuBtn").onclick=()=>{const s=$("#sidebar");s.classList.add("open");const b=$("#backdrop");b.hidden=false;};
+$("#backdrop").onclick=()=>{$("#sidebar").classList.remove("open");$("#backdrop").hidden=true;};
+$("#q").addEventListener("input",e=>renderNav(e.target.value.trim().toLowerCase()));
+
+let cur="home";
+function byId(id){return LESSONS.find(l=>l.id===id);}
+function order(){return LESSONS.map(l=>l.id);}
+function doneCount(){return LESSONS.filter(l=>DB.done[l.id]).length;}
+function pct(){return LESSONS.length?Math.round(doneCount()/LESSONS.length*100):0;}
+
+function renderNav(filter){
+  const nav=$("#nav");let h="";
+  h+='<div class="mod">🏠 Start <span class="cnt">1</span></div>';
+  h+='<button class="item'+(cur==="home"?" active":"")+'" data-go="home"><span class="n">🏠</span><span class="t">Bosh sahifa & 2 oylik reja</span></button>';
+  h+='<button class="item'+(cur==="exam"?" active":"")+'" data-go="exam"><span class="n">🎓</span><span class="t">Yakuniy imtihon</span>'+(DB.done.exam?'<span class="s">✅</span>':"")+'</button>';
+  const mods=[["html","🟧 HTML — skelet","1–2-hafta"],["css","🟦 CSS — dizayn","3–4-hafta"],["js","🟨 JavaScript — jonlantirish","5–8-hafta"]];
+  mods.forEach(([m,t,s])=>{
+    const list=LESSONS.filter(l=>l.mod===m&&(!filter||(l.title+l.id).toLowerCase().includes(filter)));
+    if(filter&&!list.length)return;
+    const dc=list.filter(l=>DB.done[l.id]).length;
+    h+='<div class="mod">'+t+' <span class="cnt">'+dc+'/'+LESSONS.filter(l=>l.mod===m).length+'</span></div>';
+    h+='<div style="font-size:11px;color:var(--faint);padding:0 10px 4px">'+s+'</div>';
+    list.forEach(l=>{
+      const sc=DB.scores[l.id];
+      h+='<button class="item'+(cur===l.id?" active":"")+(DB.done[l.id]?" done":"")+'" data-go="'+l.id+'"><span class="n">'+(DB.done[l.id]?"✓":l.n)+'</span><span class="t">'+esc(l.title)+'</span>'+(sc!=null?'<span class="s">'+sc+'</span>':"")+'</button>';
+    });
+  });
+  nav.innerHTML=h;
+  nav.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>{go(b.dataset.go);$("#sidebar").classList.remove("open");$("#backdrop").hidden=true;});
+  $("#pBar").style.width=pct()+"%";$("#pTxt").textContent=pct()+"% ("+doneCount()+"/"+LESSONS.length+")";
+}
+
+function go(id){cur=id;renderNav($("#q").value.trim().toLowerCase());render();}
+$("#nextBtn").onclick=()=>{
+  if(cur==="home"){if(LESSONS[0])go(LESSONS[0].id);return;}
+  if(cur==="exam"){go("home");return;}
+  const o=order();const i=o.indexOf(cur);
+  if(i>=0&&i<o.length-1)go(o[i+1]);else go("exam");
+};
+
+function codeBlock(code){
+  return '<div class="code"><div class="code-h"><span class="d" style="background:#f87171"></span><span class="d" style="background:#fbbf24"></span><span class="d" style="background:#4ade80"></span><span>Misol</span><button data-copy>📋 Nusxalash</button><button data-try style="background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff">▶ Sinab ko\'rish</button></div><pre>'+esc(code)+'</pre></div>';
+}
+
+function render(){
+  const v=$("#view");
+  if(cur==="home")return renderHome(v);
+  if(cur==="exam")return renderExam(v);
+  const l=byId(cur);if(!l){cur="home";return renderHome(v);}
+  $("#crumbs").innerHTML='Dars '+l.n+' / <b>'+esc(l.title)+'</b>';
+  let h='<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a);letter-spacing:.06em">'+l.mod.toUpperCase()+' • '+l.n+'-DARS • ⏱ '+l.time+'</div>';
+  h+='<h1>'+esc(l.title)+'</h1><p>'+l.goal+'</p>';
+  h+='<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-p" data-act="play">▶ Shu dars kodini sinash</button>'+(DB.done[l.id]?'<span class="btn btn-g">✅ Bajarildi ('+(DB.scores[l.id]||"")+' ball)</span>':"")+'</div></div>';
+  h+='<div class="card"><h2><span class="e">📖</span> Sodda tushuntirish (bolaga tushuntirgandek)</h2>'+l.theory+'</div>';
+  h+='<div class="card"><h2><span class="e">💻</span> Misol kod — ko\'chirib sinab ko\'ring</h2>'+codeBlock(l.code)+'<div class="tip t"><b>👩‍🏫 O\'qituvchiga metodika:</b>'+l.teacher+'</div></div>';
+  h+='<div class="card"><h2><span class="e">⭐</span> Esda saqlang (3 ta oltin qoida)</h2><ul>'+l.keys.map(k=>'<li>'+k+'</li>').join("")+'</ul></div>';
+  h+='<div class="card"><h2><span class="e">🛠</span> Amaliy topshiriq (uyga vazifa)</h2><p>'+l.task+'</p></div>';
+  h+='<div class="card"><h2><span class="e">📝</span> Quiz — o\'zingizni sinang <span style="font-size:12px;color:var(--dim)">(70+ ball = dars yopiladi)</span></h2><div id="quiz">';
+  l.quiz.forEach((q,i)=>{
+    h+='<div class="quiz-q" data-q="'+i+'"><p>'+(i+1)+'. '+q.q+'</p>';
+    q.opts.forEach((o,j)=>{h+='<label><input type="radio" name="q'+i+'" value="'+j+'"/> <span>'+o+'</span></label>';});
+    h+='<div class="q-exp" id="exp'+i+'"></div></div>';
+  });
+  h+='</div><button class="btn btn-p" id="checkBtn">✅ Tekshirish</button><div class="score" id="scoreBox"></div></div>';
+  h+='<div class="lnav"><button class="btn btn-g" id="prevB">← Oldingi</button><button class="btn btn-p" id="nextB">Keyingi →</button></div>';
+  v.innerHTML=h;
+  v.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>{navigator.clipboard.writeText(l.code);toast("Kod nusxalandi ✅");});
+  v.querySelectorAll("[data-try]").forEach(b=>b.onclick=()=>openPlay(l.code));
+  const pb=v.querySelector('[data-act="play"]');if(pb)pb.onclick=()=>openPlay(l.code);
+  $("#checkBtn").onclick=()=>checkQuiz(l);
+  $("#prevB").onclick=()=>{const o=order();const i=o.indexOf(l.id);if(i>0)go(o[i-1]);else go("home");};
+  $("#nextB").onclick=()=>{const o=order();const i=o.indexOf(l.id);if(i<o.length-1)go(o[i+1]);else go("exam");};
+  v.parentElement.scrollTop=0;document.querySelector(".content").scrollTop=0;
+}
+
+function checkQuiz(l){
+  let right=0;
+  l.quiz.forEach((q,i)=>{
+    const sel=document.querySelector('input[name="q'+i+'"]:checked');
+    const box=document.getElementById("exp"+i);
+    if(sel&&Number(sel.value)===q.a){right++;box.className="q-exp ok";box.textContent="✅ To'g'ri! "+q.why;}
+    else{box.className="q-exp no";box.textContent="❌ Noto'g'ri. To'g'ri javob: "+q.opts[q.a]+" — "+q.why;}
+  });
+  const ball=Math.round(right/l.quiz.length*100);
+  const sb=document.getElementById("scoreBox");
+  sb.className="score show "+(ball>=70?"pass":"fail");
+  sb.textContent=ball>=70?("🎉 Tabriklaymiz! "+ball+" ball — dars yopildi ✅"):("📚 "+ball+" ball — 70 kerak. Yuqorini qayta o'qing va qayta urining!");
+  DB.scores[l.id]=Math.max(DB.scores[l.id]||0,ball);
+  if(ball>=70&&!DB.done[l.id]){DB.done[l.id]=1;toast("Dars yopildi! 🎉");confetti();}
+  save();renderNav($("#q").value.trim().toLowerCase());
+}
+
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const cv=document.createElement("canvas");cv.style.cssText="position:fixed;inset:0;z-index:9999;pointer-events:none";
+  document.body.appendChild(cv);cv.width=innerWidth;cv.height=innerHeight;
+  const cx=cv.getContext("2d");const cols=["#6366f1","#a855f7","#ec4899","#f59e0b","#10b981","#38bdf8"];
+  const ps=Array.from({length:90},()=>({x:innerWidth/2+(Math.random()-.5)*200,y:innerHeight*.3,vx:(Math.random()-.5)*11,vy:-(Math.random()*10+5),s:Math.random()*7+4,c:cols[Math.random()*cols.length|0]}));
+  const t0=performance.now();(function f(t){const e=t-t0;cx.clearRect(0,0,cv.width,cv.height);
+    ps.forEach(p=>{p.vy+=.32;p.x+=p.vx;p.y+=p.vy;cx.globalAlpha=Math.max(0,1-e/1300);cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.s,p.s*.6);});
+    if(e<1400)requestAnimationFrame(f);else cv.remove();})(t0);
+}
+
+function renderHome(v){
+  $("#crumbs").textContent="Bosh sahifa";
+  const total=LESSONS.length;
+  let h='<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a);letter-spacing:.06em">O\'QITUVCHI PLATFORMASI • 2 OY • 0 DAN</div>';
+  h+='<h1>HTML • CSS • JavaScript ni <span class="grad">0 dan o\'rgatamiz</span> 🚀</h1>';
+  h+='<p>Assalomu alaykum, ustoz! Bu platforma 2 oyda o\'quvchilarni noldan frontend asoslariga olib chiqish uchun tayyorlangan: har darsda <b>sodda tushuntirish + misol + jonli sinash + topshiriq + quiz</b> bor. O\'quvchi 70+ ball olsa, dars avtomatik "bajarildi" bo\'lib boradi. Hammasi shu bitta faylda, internet kerak emas.</p>';
+  h+='<div class="grid3"><div class="stat"><b>'+total+'</b><span>jami dars</span></div><div class="stat"><b>'+doneCount()+'</b><span>bajarildi</span></div><div class="stat"><b>'+pct()+'%</b><span>progress</span></div></div>';
+  h+='<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:6px"><button class="btn btn-p" id="startB">🚀 Boshlash — 1-dars</button><button class="btn btn-g" id="resetB">♻ Progressni tozalash</button></div></div>';
+  h+='<div class="card"><h2><span class="e">🗓</span> 2 oylik reja (haftama-hafta)</h2><table class="plan"><tr><th>Hafta</th><th>Mavzu</th><th>Darslar</th></tr><tr><td>1–2</td><td>🟧 HTML — sayt skeleti</td><td>1–8: teglar, ro\'yxat, jadval, forma, semantika</td></tr><tr><td>3–4</td><td>🟦 CSS — dizayn</td><td>9–16: rang, box model, flex, grid, responsive</td></tr><tr><td>5–8</td><td>🟨 JS — jonlantirish</td><td>17–24: o\'zgaruvchi, if, sikl, funksiya, DOM, loyiha</td></tr></table>';
+  h+='<div class="tip g"><b>👩‍🏫 Ustozga 3 oltin maslahat:</b>1) Har darsni avval jonli ko\'rsating (kodni "Sinab ko\'rish" bilan). 2) O\'quvchidan kodni yoddan emas, tushunib ko\'chirib yozishni so\'rang. 3) Quizdan o\'tolmagan o\'quvchi bilan nazariyani 5 daqiqada qayta takrorlang.</div></div>';
+  h+='<div class="card"><h2><span class="e">📚</span> Baholash tizimi</h2><ul><li>Har darsda 3–4 savollik quiz — har biri 100 ballik tizimda.</li><li><b>70+ ball</b> = dars yopildi ✅ va sidebar da ✓ chiqadi.</li><li>Barcha darslar + yakuniy imtihon = kurs tugadi 🎓.</li><li>Natijalar brauzerda saqlanadi (localStorage) — kompyuterda qoladi.</li></ul></div>';
+  v.innerHTML=h;
+  $("#startB").onclick=()=>{if(LESSONS[0])go(LESSONS[0].id);};
+  $("#resetB").onclick=()=>{if(confirm("Progress o'chirilsinmi?")){DB={done:{},scores:{},theme:DB.theme};save();renderNav("");renderHome(v);toast("Tozalandi ♻");}};
+  document.querySelector(".content").scrollTop=0;
+}
+
+/* Yakuniy imtihon — keyingi commitda to'ldiriladi */
+const EXAM=[
+/*__EXAM__*/
+];
+function renderExam(v){
+  $("#crumbs").innerHTML='Yakuniy / <b>Imtihon</b>';
+  if(!EXAM.length){v.innerHTML='<div class="card"><h2>🎓 Yakuniy imtihon tez kunda qo\'shiladi</h2><p>Hozircha darslarni tugating.</p></div>';return;}
+  let h='<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a)">YAKUNIY IMTIHON • 10 SAVOL</div><h1>🎓 Kurs imtihoni</h1><p>Barcha modullar bo\'yicha 10 savol. 70+ ball = kursni tugatdingiz! Avval kamida 12 ta darsni yoping — shunda imtihon oson bo\'ladi.</p></div><div class="card"><div id="quiz">';
+  EXAM.forEach((q,i)=>{h+='<div class="quiz-q" data-q="'+i+'"><p>'+(i+1)+'. '+q.q+'</p>';q.opts.forEach((o,j)=>{h+='<label><input type="radio" name="eq'+i+'" value="'+j+'"/> <span>'+o+'</span></label>';});h+='<div class="q-exp" id="eexp'+i+'"></div></div>';});
+  h+='</div><button class="btn btn-p" id="echeck">🎓 Imtihonni tekshirish</button><div class="score" id="escore"></div></div>';
+  v.innerHTML=h;
+  $("#echeck").onclick=()=>{
+    let r=0;EXAM.forEach((q,i)=>{const s=document.querySelector('input[name="eq'+i+'"]:checked');const b=document.getElementById("eexp"+i);
+      if(s&&Number(s.value)===q.a){r++;b.className="q-exp ok";b.textContent="✅ To'g'ri! "+q.why;}
+      else{b.className="q-exp no";b.textContent="❌ To'g'ri javob: "+q.opts[q.a]+" — "+q.why;}});
+    const ball=Math.round(r/EXAM.length*100);const sb=document.getElementById("escore");
+    sb.className="score show "+(ball>=70?"pass":"fail");
+    sb.textContent=ball>=70?("🏆 "+ball+" ball — KURSNİ TUGATDINGIZ! Tabriklaymiz! 🎉"):("📚 "+ball+" ball — 70 kerak. Darslarni takrorlab qayta urining!");
+    DB.scores.exam=Math.max(DB.scores.exam||0,ball);if(ball>=70)DB.done.exam=1;
+    save();renderNav("");if(ball>=70)confetti();
+  };
+  document.querySelector(".content").scrollTop=0;
+}
+renderNav("");render();
+</script>
+</body>
+</html>
