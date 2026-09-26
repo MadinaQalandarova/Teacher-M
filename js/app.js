@@ -104,7 +104,7 @@ function render() {
   h += '<h1>' + esc(l.title) + '</h1><p>' + l.goal + '</p>';
   h += '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-p" data-act="play">' + I.play + ' Shu dars kodini sinash</button>' + (DB.done[l.id] ? '<span class="btn btn-g">✓ Bajarildi (' + (DB.scores[l.id] || "") + ' ball)</span>' : "") + '</div></div>';
   h += '<div class="card"><h2 class="ic"><span class="e">' + I.book + '</span><span>Sodda tushuntirish</span></h2>' + l.theory + '</div>';
-  if (l.visual) h += '<div class="card"><h2 class="ic"><span class="e">' + I.img + '</span><span>Rasmda ko\'rinishi — ko\'rib tushuning</span></h2><div class="visual">' + l.visual + '</div></div>';
+  if (l.visual) h += '<div class="visual">' + l.visual + '</div>';
   h += '<div class="card"><h2 class="ic"><span class="e">' + I.code + '</span><span>Misol kod — ko\'chirib sinab ko\'ring</span></h2>' + codeBlock(l.code) + '</div>';
   h += '<div class="card"><h2 class="ic"><span class="e">' + I.star + '</span><span>Esda saqlang (oltin qoidalar)</span></h2><ul>' + l.keys.map(k => '<li>' + k + '</li>').join("") + '</ul></div>';
   h += '<div class="card"><h2 class="ic"><span class="e">' + I.pencil + '</span><span>Amaliy topshiriq (uyga vazifa)</span></h2><p>' + l.task + '</p></div>';
