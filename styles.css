@@ -140,4 +140,15 @@ table.plan td.tt{font-family:Consolas,monospace;font-size:12.5px;color:var(--str
   .menu-b{display:inline-flex!important}
 }
 .menu-b{display:none}
+/* dars ichidagi rasm-chizmalar (SVG diagrammalar) */
+.visual{background:var(--hover);border:1px dashed var(--border);border-radius:14px;padding:18px 12px;margin:6px 0;display:flex;justify-content:center;overflow-x:auto}
+.visual svg{max-width:100%;height:auto}
+.vbox{fill:var(--elev);stroke:var(--a);stroke-width:2}
+.vbox2{fill:var(--asoft);stroke:var(--a2);stroke-width:2}
+.vbox3{fill:var(--warnbg);stroke:var(--warn);stroke-width:2}
+.vt{fill:var(--text);font-size:13px;font-weight:700;font-family:var(--font);text-anchor:middle}
+.vs{fill:var(--dim);font-size:11px;font-family:var(--font);text-anchor:middle}
+.vln{stroke:var(--a);stroke-width:2;fill:none}
+.vhl{fill:var(--a)}
+.vbig{fill:var(--text);font-size:15px;font-weight:800;font-family:Consolas,monospace;text-anchor:middle}
 @media(max-width:560px){.grid3{grid-template-columns:1fr}.hero{padding:20px}.card{padding:17px}}
