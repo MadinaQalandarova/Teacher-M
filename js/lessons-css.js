@@ -208,7 +208,7 @@ teacher:`Rang tanlashda qiynalganlarga tayyor 3 palitra bering. 50 daqiqa mustaq
 keys:[`Chiroy sirlari: radius + soya + hover + 2 rang.`,`Kompyuter + telefon — ikkalasida ham tekshiring.`,`Tayyor portfolio — keyingi JS darslarida jonlanadi.`],
 task:`🏆 Portfolio loyihasi: header gradient + flex menyu + 3+ karta + hover + responsive. Bu CSS modulining bahosi!`,
 quiz:[
-{q:`Kartani ko'tarilgan ko'rsatish uchun?`,opts:[`border`,`box-shadow`,`color`,`margin auto`],a:1,why:`Soya chuqurlik beradi.`},
+{q:`Karta havoda ko'tarilib turgandek ko'rinishi uchun nima kerak?`,opts:[`border`,`box-shadow`,`color`,`margin auto`],a:1,why:`Soya (box-shadow) kartaga chuqurlik beradi.`},
 {q:`Gradient nima?`,opts:[`Bitta rang`,`Rangdan rangga silliq o'tish`,`Rasm formati`,`Shrift turi`],a:1,why:`linear-gradient chiroyli fon beradi.`},
 {q:`Keyingi modul nima?`,opts:[`Yana HTML`,`JavaScript — saytni jonlantirish`,`Dars tugadi`,`Faqat imtihon`],a:1,why:`Endi eng qiziq qism — JS! ⚡`}]}
 ];
