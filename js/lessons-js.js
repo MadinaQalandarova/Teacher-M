@@ -46,7 +46,7 @@ task:`Baholagich yasang: 90+ "A'lo!", 70+ "Yaxshi", 50+ "Qoniqarli", aks holda "
 quiz:[
 {q:`boolean qiymatlar qaysi?`,opts:[`"ha" / "yo'q"`,`true / false`,`1 / 2`,`+ / -`],a:1,why:`Faqat ikki qiymat: rost/yolg'on.`},
 {q:`Tenglikni tekshirish belgisi?`,opts:[`=`,`==`,`===`,`!==`],a:2,why:`=== turini ham tekshiradi (eng ishonchli).`},
-{q:`yosh 15 bo'lsa qaysi shox ishlaydi?`,opts:[`if (yosh katta) shoxi`,`else if (o'smir) shoxi`,`else (oxirgi) shoxi`,`Hech qaysi`],a:1,why:`15 katta emas, lekin o'smir — ikkinchi shart rost.`}]},
+{q:`yosh 15 bo'lsa, qaysi shart bajariladi?`,opts:[`Birinchi shart (if)`,`Ikkinchi shart (else if)`,`Oxirgi (else)`,`Hech qaysi`],a:1,why:`15 katta emas, lekin o'smir — ikkinchi shart rost.`}]},
 
 {id:"js-3",mod:"js",n:19,title:"Massiv va sikllar: ro'yxat sehri",time:"55 daqiqa",
 goal:`Array ochadi, for bilan ro'yxatni ekranga chiqaradi.`,
