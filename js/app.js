@@ -2,8 +2,9 @@
    Darslar js/lessons-*.js dan, imtihon js/exam.js dan keladi.
    Ikonkalar — toza SVG (har tizimda bir xil chiroyli ko'rinadi). */
 const LS = "teacher_m_v1";
-let DB = { done: {}, scores: {}, theme: "dark" };
+let DB = { done: {}, scores: {}, visits: {}, theme: "dark" };
 try { const r = localStorage.getItem(LS); if (r) DB = Object.assign(DB, JSON.parse(r)); } catch (e) { console.warn(e); }
+if (!DB.visits) DB.visits = {};
 function save() { localStorage.setItem(LS, JSON.stringify(DB)); }
 document.documentElement.dataset.theme = DB.theme || "dark";
 const $ = s => document.querySelector(s);
@@ -18,6 +19,7 @@ const I = {
   pencil: '<svg viewBox="0 0 24 24"><path d="M17 3l4 4L8 20l-5 1 1-5z"/></svg>',
   checksq: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8.5 12.5l2.5 2.5 5-5.5"/></svg>',
   cal: '<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>',
+  chart: '<svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M8 16v-5M13 16V8M18 16v-8"/></svg>',
   img: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="2"/><path d="M4 18l5-5 3 3 3-3 5 5"/></svg>',
   board: '<svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg>',
   sun: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
@@ -79,7 +81,7 @@ function renderNav(filter) {
   $("#pTxt").textContent = pct() + "% (" + doneCount() + "/" + LESSONS.length + ")";
 }
 
-function go(id) { cur = id; renderNav($("#q").value.trim().toLowerCase()); render(); }
+function go(id) { cur = id; if (byId(id)) { DB.visits[id] = (DB.visits[id] || 0) + 1; save(); } renderNav($("#q").value.trim().toLowerCase()); render(); }
 $("#nextBtn").onclick = () => {
   if (cur === "home") { if (LESSONS[0]) go(LESSONS[0].id); return; }
   if (cur === "exam") { go("home"); return; }
@@ -161,6 +163,23 @@ function confetti() {
   })(t0);
 }
 
+/* Eng ko'p borilgan 5 dars — dashboard */
+function topHtml() {
+  const rows = LESSONS
+    .map(l => ({ l, c: DB.visits[l.id] || 0 }))
+    .filter(r => r.c > 0)
+    .sort((a, b) => b.c - a.c)
+    .slice(0, 5);
+  if (!rows.length) return '<p style="color:var(--dim);font-size:13.5px">Hali statistika yo\'q — darslarni oching, shu yerda eng ko\'p kirgan darslaringiz chiqadi.</p>';
+  const max = rows[0].c;
+  return rows.map((r, i) =>
+    '<button class="top-row" data-top="' + r.l.id + '"><span class="top-rank">' + (i + 1) + '</span>' +
+    '<span class="top-body"><span class="top-t">' + r.l.d + '. ' + esc(r.l.title) + '</span>' +
+    '<span class="top-bar"><i style="width:' + Math.max(8, Math.round(r.c / max * 100)) + '%"></i></span></span>' +
+    '<span class="top-c">' + r.c + ' marta</span></button>'
+  ).join("");
+}
+
 function renderHome(v) {
   $("#crumbs").textContent = "Bosh sahifa";
   const total = LESSONS.length;
@@ -170,10 +189,12 @@ function renderHome(v) {
   h += '<div class="grid3"><div class="stat"><b>' + total + '</b><span>jami dars</span></div><div class="stat"><b>' + doneCount() + '</b><span>bajarildi</span></div><div class="stat"><b>' + pct() + '%</b><span>progress</span></div></div>';
   h += '<div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:6px"><button class="btn btn-p" id="startB">' + I.play + ' Boshlash — 1-dars</button><button class="btn btn-g" id="resetB">Progressni tozalash</button></div></div>';
   h += '<div class="card"><h2 class="ic"><span class="e">' + I.cal + '</span><span>2 oylik reja (hafta-hafta)</span></h2><table class="plan"><tr><th>Hafta</th><th>Mavzu</th><th>Darslar</th></tr><tr><td>1–2</td><td><span class="dot" style="background:#f97316;display:inline-block;vertical-align:middle"></span> HTML — sayt skeleti</td><td>1–9: teglar, atributlar, ro\'yxat, jadval, forma, semantika</td></tr><tr><td>3–4</td><td><span class="dot" style="background:#3b82f6;display:inline-block;vertical-align:middle"></span> CSS — dizayn</td><td>10–17: rang, box model, flex, grid, responsive</td></tr><tr><td>5–8</td><td><span class="dot" style="background:#eab308;display:inline-block;vertical-align:middle"></span> JS — jonlantirish</td><td>18–25: o\'zgaruvchi, if, sikl, funksiya, DOM, loyiha</td></tr></table></div>';
+  h += '<div class="card"><h2 class="ic"><span class="e">' + I.chart + '</span><span>Eng ko\'p borilganlar</span></h2><div id="topList">' + topHtml() + '</div></div>';
   h += '<div class="card"><h2 class="ic"><span class="e">' + I.book + '</span><span>Baholash tizimi</span></h2><ul><li>Har darsda 3–4 savollik quiz — 100 ballik tizimda.</li><li><b>70+ ball</b> = dars yopildi ✓ va yon menyuda ✓ chiqadi.</li><li>Barcha darslar + yakuniy imtihon = kurs tugadi 🎓.</li><li>Natijalar brauzerda saqlanadi.</li></ul></div>';
   v.innerHTML = h;
+  v.querySelectorAll("[data-top]").forEach(b => b.onclick = () => go(b.dataset.top));
   $("#startB").onclick = () => { if (LESSONS[0]) go(LESSONS[0].id); };
-  $("#resetB").onclick = () => { if (confirm("Progress o'chirilsinmi?")) { DB = { done: {}, scores: {}, theme: DB.theme }; save(); renderNav(""); renderHome(v); toast("Tozalandi ♻"); } };
+  $("#resetB").onclick = () => { if (confirm("Progress o'chirilsinmi?")) { DB = { done: {}, scores: {}, visits: {}, theme: DB.theme }; save(); renderNav(""); renderHome(v); toast("Tozalandi ♻"); } };
   document.querySelector(".content").scrollTop = 0;
 }
 
