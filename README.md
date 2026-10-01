@@ -3,6 +3,7 @@
 O'quvchilar uchun platforma (TV da ko'rsatishga mos): 2 oyda noldan frontend asoslari.
 Har darsda: sodda tushuntirish + rasm-chizma + misol kod + jonli sinash + topshiriq + quiz (70+ ball = dars yopiladi).
 Ustoz metodikasi alohida **"Ustoz uchun"** sahifada — darsda ko'rinmaydi.
+Bosh sahifada **"Eng ko'p borilganlar"** dashboardi bor — eng ko'p ochilgan 5 dars (tashriflar brauzerda hisoblanadi).
 
 ## Ochish
 
