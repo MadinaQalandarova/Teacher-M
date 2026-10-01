@@ -40,7 +40,7 @@ task:`O'zingiz haqingizda mini-matn yozing: 1 ta h1 (ismingiz), 2 ta h2 (oilam /
 quiz:[
 {q:`Qaysi yozuv to'g'ri yozilgan?`,opts:[`<p>Salom</p>`,`<p>Salom`,`pSalom/p`,`<P Salom>`],a:0,why:`Teg ochiladi va / bilan yopiladi.`},
 {q:`h1 sahifada necha marta bo'lishi kerak?`,opts:[`Cheksiz`,`Faqat 1 marta`,`5 marta`,`Umuman bo'lmasligi kerak`],a:1,why:`h1 — eng asosiy sarlavha, bittagina bo'ladi.`},
-{q:`Izoh (komentariya) nima qiladi?`,opts:[`Qalin matn chiqaradi`,`Brauzerda ko'rinmaydi, faqat kodda turadi`,`Rasm qo'yadi`,`Sahifani o'chiradi`],a:1,why:`Izoh faqat dasturchiga eslatma, sahifada chiqmaydi.`},
+{q:`Kod ichidagi izoh nima qiladi?`,opts:[`Qalin matn chiqaradi`,`Brauzerda ko'rinmaydi, faqat kodda turadi`,`Rasm qo'yadi`,`Sahifani o'chiradi`],a:1,why:`Izoh faqat dasturchiga eslatma, sahifada chiqmaydi.`},
 {q:`Rasm qo'yish uchun qaysi teg?`,opts:[`a`,`img`,`photo`,`picture`],a:1,why:`img + src = rasm, alt = zaxira matn.`}]},
 
 {id:"html-attr",mod:"html",n:3,title:"Atributlar: teglarning sozlamalari",time:"60 daqiqa",
