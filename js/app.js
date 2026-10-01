@@ -198,7 +198,7 @@ function renderGuide(v) {
 function renderExam(v) {
   $("#crumbs").innerHTML = 'Yakuniy / <b>Imtihon</b>';
   if (!EXAM.length) { v.innerHTML = '<div class="card"><h2>Yakuniy imtihon tez kunda qo\'shiladi</h2><p>Hozircha darslarni tugating.</p></div>'; return; }
-  let h = '<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a)">YAKUNIY IMTIHON • 10 SAVOL</div><h1>Kurs imtihoni</h1><p>Barcha modullar bo\'yicha 10 savol. 70+ ball = kursni tugatdingiz! Avval kamida 12 ta darsni yoping — shunda imtihon oson bo\'ladi.</p></div><div class="card"><div id="quiz">';
+  let h = '<div class="hero"><div style="font-size:12px;font-weight:800;color:var(--a)">YAKUNIY IMTIHON • 10 SAVOL</div><h1>Kurs imtihoni</h1><p>Barcha modullar bo\'yicha 10 savol. 70+ ball = kursni tugatdingiz! Avval kamida 12 ta darsni tugating — shunda imtihon oson bo\'ladi.</p></div><div class="card"><div id="quiz">';
   EXAM.forEach((q, i) => {
     h += '<div class="quiz-q" data-q="' + i + '"><p>' + (i + 1) + '. ' + esc(q.q) + '</p>';
     q.opts.forEach((o, j) => { h += '<label><input type="radio" name="eq' + i + '" value="' + j + '"/> <span>' + esc(o) + '</span></label>'; });
